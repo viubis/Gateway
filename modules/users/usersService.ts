@@ -1,7 +1,6 @@
 import axios from "axios";
-import express from "express";
 
-class Api{
+class usersService{
     static async getUsers(){
         const response = await axios.get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/`)
         .then((response) => {
@@ -56,8 +55,4 @@ class Api{
 
 }
 
-//Api.getUsers();
-//Api.getUsersById(1);
-//Api.getAddressUsersById(1);
-//Api.getContactsUsersById(1);
-console.log(await Api.getUsersDataById(1))
+export default usersService;
