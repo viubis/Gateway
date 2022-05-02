@@ -1,63 +1,12 @@
-import axios from "axios";
 import express from "express";
+import routes from "./routes/routes.js";
 
-class Api{
-    static async getUsers(){
-        const response = await axios.get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/`)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.log(error.response.data)
-        });
-       console.log('response', response)
-    }
-    
-    static async getUsersById(userId){
-        const response = await axios.get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/${userId}`)
-        .then((response) => {
-            return response.data;
-        })
-        .catch((error) => {
-            console.log(error.response.data)
-        });
-        return response
-    }
+const app = express();
 
-    static async getAddressUsersById(userId){
-        const response = await axios.get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/${userId}/address`)
-        .then((response) => {
-            return response.data
-        })
-        .catch((error) => {
-            console.log(error.response.data)
-        });
-        return response
-    }
-    
-    static async getContactsUsersById(userId){
-        const response = await axios.get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/${userId}/contacts`)
-        .then((response) => {
-            return response.data
-        })
-        .catch((error) => {
-            console.log(error.response.data)
-        });
-       return response;
-    }
+app.use(express.json());
 
-    static async getUsersDataById(userId){
-        const usersAddress = await this.getAddressUsersById(userId)
-        const usersContacts = await this.getContactsUsersById(userId)
-        const usersData = await this.getUsersById(userId)
+app.use(routes);
 
-        return {...usersData,addresses:usersAddress,contacts:usersContacts}
-    }
-
-}
-
-//Api.getUsers();
-//Api.getUsersById(1);
-//Api.getAddressUsersById(1);
-//Api.getContactsUsersById(1);
-console.log(await Api.getUsersDataById(1))
+app.listen(3333, () => {
+  console.log("🚀 Server started on port 3333!");
+});
