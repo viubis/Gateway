@@ -4,7 +4,7 @@ class usersService {
   static async getUsers() {
     const response = await axios
       .get(
-        `https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users?page=1&limit=1`
+        `https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users`
       )
       .then((response) => {
         return response.data;
@@ -64,26 +64,40 @@ class usersService {
   }
 
   static async getUsersData() {
-    const usersData = await this.getUsers();
-    const result = await this.test(usersData);
-
-    console.log(result);
+    const usersData = await this.getUsers()
+    .then((response) => {
+      return this.test(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    console.log(usersData);
+    return usersData;
   }
-  static async test(usersData) {
-    usersData.forEach(async (user) => {
-      const userAddress = await this.getAddressUsersById(user.id);
-      const userContacts = await this.getContactsUsersById(user.id);
 
-      result.push({
-        ...user,
-        addresses: userAddress,
-        contacts: userContacts,
-      });
+  static async test(usersData) {
+
+    const build = async () => {
+      const result = [];
+
+      for (const users of usersData) {
+        const userAddress = await this.getAddressUsersById(users.id);
+        const userContacts = await this.getContactsUsersById(users.id);
+        result.push({users, addresses: userAddress, contacts: userContacts});
+      }
+      return result;
+    }  
+      
+    const resultado = build().then((resp) => {
+      return resp;
+    })
+    .catch((error) => {
+      console.log(error);
     });
 
-    return result;
-  }
-
+    return resultado;
+  }    
+    
   static async sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
