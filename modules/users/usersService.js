@@ -1,6 +1,8 @@
 import axios from "axios";
 
 class usersService {
+ 
+  //funcao pra retornar todos usuarios
   static async getUsers() {
     const response = await axios
       .get(
@@ -15,6 +17,7 @@ class usersService {
     return response;
   }
 
+  //funcao pra retornar usuarios por id
   static async getUsersById(userId) {
     const response = await axios
       .get(`https://62151ae9cdb9d09717adf48c.mockapi.io/api/v1/users/${userId}`)
@@ -27,6 +30,7 @@ class usersService {
     return response;
   }
 
+  //funcao pra retornar enderecos por id de usuario
   static async getAddressUsersById(userId) {
     const response = await axios
       .get(
@@ -41,6 +45,7 @@ class usersService {
     return response;
   }
 
+ //funcao pra retornar contato por id de usuario
   static async getContactsUsersById(userId) {
     const response = await axios
       .get(
@@ -55,6 +60,7 @@ class usersService {
     return response;
   }
 
+  //funcao pra retornar dados de usuario (utilizado como teste)
   static async getUsersDataById(userId) {
     const usersAddress = await this.getAddressUsersById(userId);
     const usersContacts = await this.getContactsUsersById(userId);
@@ -63,10 +69,11 @@ class usersService {
     return { ...usersData, addresses: usersAddress, contacts: usersContacts };
   }
 
+  //funcao para pegar dados do usuario
   static async getUsersData() {
     const usersData = await this.getUsers()
     .then((response) => {
-      return this.test(response);
+      return this.getUsersDate(response);
     })
     .catch((error) => {
       console.log(error);
@@ -75,7 +82,8 @@ class usersService {
     return usersData;
   }
 
-  static async test(usersData) {
+  //continuacao da funcao  UserData pega o dado do usuario de acordo com a id
+  static async getUsersDate(usersData) {
 
     const build = async () => {
       const result = [];
