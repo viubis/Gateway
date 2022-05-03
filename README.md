@@ -3,6 +3,26 @@
 ## Ferramentas
 Foi utilizado o Nodejs/javascript como linguagem para desenvolvimento.
 
-framework/biblioteca Express, Axios, Body-Parse e Nodemon.
+framework/biblioteca Express, Axios, Body-Parse.
 
-Foi utilizado a ferramenta/software Insomnia para trabalhar com as requisições HTTP.
+## Rodando o Projeto
+
+```shell
+npm install -y
+
+npm install --save express
+
+npm install --save nodemon
+
+npm install --save body-parser
+
+node index.js
+```
+
+## Consumindo a API
+
+Para retornar todos os usuários:
+http://localhost:3333/users/all
+
+Para retornar o endpoint:
+http://localhost:3333/users
